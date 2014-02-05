@@ -1,0 +1,103 @@
+{
+  "modules": [
+    {
+      "repository": "https://github.com/substance/application.git",
+      "folder": "node_modules/substance-application",
+      "branch": "appstates"
+    },
+    {
+      "repository": "https://github.com/substance/chronicle.git",
+      "folder": "node_modules/substance-chronicle",
+      "branch": "indexeddb"
+    },
+    {
+      "repository": "https://github.com/substance/commander.git",
+      "folder": "node_modules/substance-commander",
+      "branch": "0.2.x"
+    },
+    {
+      "repository": "https://github.com/michael/data.git",
+      "folder": "node_modules/substance-data",
+      "branch": "0.9.x"
+    },
+    {
+      "repository": "https://github.com/substance/document.git",
+      "folder": "node_modules/substance-document",
+      "branch": "refactor"
+    },
+    {
+      "repository": "https://github.com/substance/article.git",
+      "folder": "node_modules/substance-article",
+      "branch": "refactor"
+    },
+    {
+      "repository": "https://github.com/substance/nodes.git",
+      "folder": "node_modules/substance-nodes",
+      "branch": "refactor"
+    },
+    {
+      "repository": "https://github.com/elifesciences/lens-outline.git",
+      "folder": "node_modules/lens-outline",
+      "branch": "refactor"
+    },
+    {
+      "repository": "https://github.com/substance/toc.git",
+      "folder": "node_modules/substance-toc",
+      "branch": "refactor"
+    },
+    {
+      "repository": "https://github.com/substance/converter.git",
+      "folder": "node_modules/substance-converter",
+      "branch": "pandoc_1_12_1"
+    },
+    {
+      "repository": "https://github.com/substance/operator.git",
+      "folder": "node_modules/substance-operator",
+      "branch": "0.3.x"
+    },
+    {
+      "repository": "https://github.com/substance/regexp.git",
+      "folder": "node_modules/substance-regexp",
+      "branch": "0.2.x"
+    },
+    {
+      "repository": "https://github.com/substance/surface.git",
+      "folder": "node_modules/substance-surface",
+      "branch": "0.4.x"
+    },
+    {
+      "repository": "https://github.com/substance/test.git",
+      "folder": "node_modules/substance-test",
+      "branch": "0.3.x"
+    },
+    {
+      "repository": "https://github.com/substance/util.git",
+      "folder": "node_modules/substance-util",
+      "branch": "0.3.x"
+    },
+    {
+      "repository": "https://github.com/substance/reader.git",
+      "folder": "node_modules/substance-reader",
+      "branch": "0.3.x"
+    },
+    {
+      "repository": "https://github.com/substance/publisher.git",
+      "folder": "node_modules/substance-publisher",
+      "branch": "master"
+    }
+  ],
+  "node_modules": {
+    "underscore": "1.5.x",
+    "express": "3.3.x",
+    "jszip": "https://codeload.github.com/Stuk/jszip/legacy.tar.gz/v2.0.0",
+    "substance-store": "0.1.x",
+    "mocha": "1.12.x",
+    "ncp": "0.5.0"
+  },
+  "npm": {
+    "engines": {
+      "node": ">=0.8.x",
+      "npm": ">=1.1.x"
+    }
+  }
+}

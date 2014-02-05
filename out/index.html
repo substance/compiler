@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:mml="http://www.w3.org/1998/Math/MathML">
+<head>
+  <title>Beyond simulating paper</title>
+  <link href='styles/font-awesome.css' rel='stylesheet' type='text/css'/>
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link href='substance.css' rel='stylesheet' type='text/css'/>
+
+  <script src="lib/jquery-2.0.3.min.js"></script>
+
+  <script src='substance.js'></script>
+
+  <script>
+
+    if (window.Substance === undefined) {
+      window.Substance = require("/src/substance.js");
+    }
+
+    function isIOSDevice() {
+      var iPadAgent = navigator.userAgent.match(/iPad/i) != null;
+      var iPodAgent = navigator.userAgent.match(/iPhone/i) != null;
+      return iPadAgent || iPodAgent;
+    }
+
+    function isIphone() {
+      var iPhoneAgent = navigator.userAgent.match(/iPhone/i) != null;
+      return iPhoneAgent;
+    }
+
+    function isMobile() {
+      var iPadAgent = navigator.userAgent.match(/iPad/i) != null;
+      var iPodAgent = navigator.userAgent.match(/iPhone/i) != null;
+      var AndroidAgent = navigator.userAgent.match(/Android/i) != null;
+      var webOSAgent = navigator.userAgent.match(/webOS/i) != null;
+
+      return iPadAgent || iPodAgent || AndroidAgent || webOSAgent;
+    }
+
+    function isTouchDevice() {
+      return 'ontouchstart' in document.documentElement;
+    }
+
+    // Create a new Lens app instance
+    // --------
+    //
+    // Injects itself into body
+
+    $.get("data/content.json")
+    .done(function(data) {
+      $('body').empty()
+               .addClass('reader');
+      var app = new Substance({
+        document: data
+      });
+
+      $(function() {
+
+        app.start();
+
+        if (isTouchDevice()) {
+          $('#container').addClass('touchable');
+        }
+
+        if (isIOSDevice()) {
+          $('#container').addClass('ios');
+        }
+
+        if (isIphone()) {
+          $('#container').addClass('iphone');
+        }
+      });
+    })
+    .fail(function(err) {
+      $('body').html(JSON.stringify(err));
+    });
+
+  </script>
+</head>
+<body class="current-view">
+<h1>Beyond simulating paper</h1>
+<p>It's a new year. And we wanted to share with you what our plans are for 2014. We are still on our mission to build open software to help modernize digital publishing and move beyond simulating paper, as this is what current word-processors (MS Word, Apple Pages, OpenOffice) and formats (PDF) do. By promoting an open document format and supporting tools we want to unleash the full power of digital content and provide an interactive experience for authoring and viewing. Moreover, we would like to enable people to act as their own publisher and no longer be subject to the politics of big publishing companies and software vendors. In this post we would like to explain some decisions we have made in order to make that happen and what you can expect for the near future. But first, let us explain what the main idea of Substance was about.</p>
+<h2>The Idea of Substance</h2>
+<p>Substance was initiated in late 2010, as an attempt to bring content-oriented authoring to the web. Users should be able to focus on their writing, leaving the layout part to the authoring system entirely. The content produced should be exposed as data, which allows digital documents to be queried like a database, and eases integration of that content. With the help of Samo Korosec our designer in chief, we got a first release ready in February 2011. The initial feedback was great. More than 5000 people signed up within the first three months. At that time Substance was an experiment and not ready for production use. Since then we've been working hard to change that.</p>
+<h2>Who is it for</h2>
+<p>Substance is a good fit for book authors and journalists, as it enables self-publishing of books and stories. It's also suitable for  acadamic use cases, such as writing and publishinging research articles, but also for students creating seminar papers. At the end, Substance is for everyone who is writing prose and interested in a modern alternative to classic word-processing.</p>
+<h2>The Setup for 2014</h2>
+<p>It is three years later now, and the idea has not changed. However, Substance has grown up since then and we are facing the complexities of managing a big software project. We also needed to find ways to self-finance our work.
+</p>
+<h2>A team of two</h2>
+<p>Substance is currently developed by Michael Aufreiter and Oliver Buchtala, who joined the project at a full capacity in 2012. Together we founded the Substance Software GmbH to provide consulting and services to finance our ambitious project. We are supported by volunteers from the open source community whose contributions have influenced the project significantly. Thank you Victor, Pier, Tim, Daniel and all the others!
+</p>
+<h2>Priorities</h2>
+<p>It has always been clear to us that the main challenge of Substance lies in creating a reliable web-based authoring experience. Before we could release a complete solution we would need to solve that problem at heart.</p>
+<p>As a consequence we stripped down the project. We ditched all server infrastructure, and thus took down the original Substance.io platform. We also cut some features, such as online collaboration. They will all come back, but first our focus will be on creating a reliable editor for professional writers.</p>
+<h2>High quality open source modules</h2>
+<p>Substance offers a collection of modules that helps you creating, modifying and displaying structured documents. We are providing a wide range of open source components that can be integrated easily by developers. All Substance core components (data manipulation, document model, operational transformation, versioning, converters) are licensed under MIT for most flexibility. For application-level components we use GPL and offer commercial licenses on request.</p>
+<h2>Substance Reader</h2>
+<p>The Substance Reader is used to display Substance documents on the desktop and on mobile. It has been shaped over the past years and provides a clean and unobtrusive reading experience.</p>
+<h2>Substance Surface</h2>
+<p>The Substance Surface is a flexible editing compontent, that can be used independently to realize custom web-based editing scenarios. Substance Surface is the first web-based editor that manipulates a Javascript data structure, while HTML is only used for layouting and capturing the cursor position. Only by using this approach error-free and scalable text manipulation can be guaranteed.</p>
+<h2>Substance Converter</h2>
+<p>Using the Substance Converter allows users to turn existing formats into Substance documents and vice versa. By delegating the hard work to Pandoc we support a wide range of input and output formats, such as Markdown, Media Wiki and DocBook, but also Word processor formats such as Microsoft Word docx and OpenOffice/LibreOffice ODT.</p>
+<h2>Products and services</h2>
+<h2>Substance Composer</h2>
+<p>Our first product is called the Substance Composer and a beta will be ready around April 2014. We are sure you will love it! Note, that the Composer is just our own reference implementation of an editor built on top of the Substance document model. We are looking forward to see the developer community build other editor variants for different use-cases.</p>
+<h2>Substance.io platform</h2>
+<p>Substance.io provides a simple way to publish your articles right from the Composer interface. Alternatively you can always choose to host them yourself. It's only a matter of uploading a folder to a webserver (even Dropbox works).
+</p>
+<h2>Consulting</h2>
+<p>Through our company, registered in Austria,  we are offering consulting to help organizations modernize their digital publishing workflows. We have helped innovate publishers, such as eLife to improve the way scientific research is consumed online. Together with Ivan Grubisic from Berkeley we developed a new interactive display for scientific articles, eLife Lens. Only days ago, PubChase has made available the whole corpus of PubMed open access articles for viewing in Lens. Our work on Lens has also substantially driven the Substance project, as it served as a great real-world usecase. Credits go to Ian Mulvany from eLife for investing into that idea in the scope of an open source project. We are interested to see what other use cases people will develop. Don't hesitate to contact us if you want to bring in your idea.</p>
+<h2>Stay tuned</h2>
+<p>The article you are currently reading is the first that has been written using the all new Composer. The software is already functional, we just need to work out the remaining glitches and package it as a native application for all major platforms.</p>
+<p>If you are interested in beta testing the new Composer, please sign up at our mailing list. We will let you know when it is ready — it can only be a matter of weeks. Also check our website from time to time for further updates.
+</p>
+<h2>Figures</h2>
+<h3>Michael Aufreiter</h3>
+<img src="data/michael.jpg"/>
+<p>As the initiator of Substance, Michael coordinates the project and leads UI/UX development. He is a passionate open source commiter since many years. Notable projects include Prose, a visual interface for managing content on GitHub and eLife Lens, a new way to view research.</p>
+<h3>Oliver Buchtala</h3>
+<img src="data/oliver.jpg"/>
+<p>Oliver has worked in various fields of Computer Science. He loves and masters code generation, parsers and lately, Javascript. Back in 2010, he helped with the initial design of the Substance Document Model. Today he's involved in every aspect of development, with a focus on infrastructure and system architecture.</p>
+<h3>Substance Composer</h3>
+<img src="data/composer.png"/>
+<p>The Substance Composer is a professional writing environment targeting scientists, journalists and book authors. For the first time you can write an article without having to scroll back and forth for the referenced figures. You can also create and and collaboratively discuss issues that stick on a particular text-fragment. Don't get irritated by the browser's address bar, the final product will run locally as a native application on your operating system.</p>
+<h3>Substance Reader</h3>
+<img src="data/reader.png"/>
+<p>The Substance Reader is used to publish your documents online. It lets you explore figures and figure descriptions – without losing your place in the article text. While most online articles simply replicate print, the Substance Reader provides an interactive reading experience.</p>
+</body>
+</html>
