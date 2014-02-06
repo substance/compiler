@@ -14,13 +14,9 @@
 
   <script src="lib/jquery-2.0.3.min.js"></script>
 
-  <script src='substance.js'></script>
+  <script src='substance.min.js'></script>
 
   <script>
-
-    if (window.Substance === undefined) {
-      window.Substance = require("/src/substance.js");
-    }
 
     function isIOSDevice() {
       var iPadAgent = navigator.userAgent.match(/iPad/i) != null;
@@ -54,7 +50,8 @@
     $.get("data/content.json")
     .done(function(data) {
       $('body').empty()
-               .addClass('reader');
+               .addClass('reader')
+               .show();
       var app = new Substance({
         document: data
       });
@@ -82,7 +79,7 @@
 
   </script>
 </head>
-<body class="current-view">
+<body class="current-view" style="display: none;">
 <h1>Beyond simulating paper</h1>
 <p>It's a new year. And we wanted to share with you what our plans are for 2014. We are still on our mission to build open software to help modernize digital publishing and move beyond simulating paper, as this is what current word-processors (MS Word, Apple Pages, OpenOffice) and formats (PDF) do. By promoting an open document format and supporting tools we want to unleash the full power of digital content and provide an interactive experience for authoring and viewing. Moreover, we would like to enable people to act as their own publisher and no longer be subject to the politics of big publishing companies and software vendors. In this post we would like to explain some decisions we have made in order to make that happen and what you can expect for the near future. But first, let us explain what the main idea of Substance was about.</p>
 <h2>The Idea of Substance</h2>

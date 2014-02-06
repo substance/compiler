@@ -233,6 +233,7 @@ var _ = require("underscore");
 
 var Application = function(config) {
   View.call(this);
+
   this.config = config;
 
   this.__controller__ = null;
@@ -248,10 +249,19 @@ Application.Prototype = function() {
   // ----------
   //
 
-  this.start = function() {
+  this.start = function(options) {
+    options = options || {};
     // First setup the top level view
-    this.$el = $('body');
-    this.el = this.$el[0];
+    if (options.el) {
+      this.el = options.el;
+      this.$el = $(this.el);
+    } else {
+      // Defaults to body element
+      this.$el = $('body');
+      this.el = this.$el[0];
+    }
+
+    if (this.initialize) this.initialize();
     this.render();
 
     // Now the normal app lifecycle can begin
@@ -8296,6 +8306,7 @@ var DocumentError = errors.define("DocumentError");
 
 var Document = function(options) {
   Data.Graph.call(this, options.schema, options);
+  this.blobs = {};
 };
 
 // Default Document Schema
@@ -8333,10 +8344,26 @@ Document.Prototype = function() {
     return this.schema;
   };
 
-
   this.create = function(node) {
     __super__.create.call(this, node);
     return this.get(node.id);
+  };
+
+  // Create a blob based on an ArrayBuffer
+  // --------
+  //
+  // Currently assumes image/png as a mime type, this needs to be changed
+
+  this.createBlob = function(id, data, options) {
+    return this.blobs[id] = new Blob([data], options);
+  };
+
+  // Returns a blob based on the blob id
+  // --------
+  // 
+
+  this.getBlob = function(id) {
+    return this.blobs[id];
   };
 
   // Delegates to Graph.get but wraps the result in the particular node constructor
@@ -10649,7 +10676,7 @@ Figure.type = {
   "parent": "content",
   "properties": {
     "url": "string",
-    "image_data": "string",
+    "image": "blob",
     "label": "string",
     "caption": "paragraph"
   }
@@ -10663,7 +10690,7 @@ Figure.description = {
   "properties": {
     "label": "Figure label (e.g. Figure 1)",
     "url": "Image url",
-    "image_data": "Base64 encoded image data",
+    "image": "Blob id that has the image data",
     "caption": "A reference to a paragraph that describes the figure",
   }
 };
@@ -10676,7 +10703,7 @@ Figure.example = {
   "id": "figure_1",
   "label": "Figure 1",
   "url": "http://example.com/fig1.png",
-  "image_data": "",
+  "image": "",
   "caption": "paragraph_1"
 };
 
@@ -10692,6 +10719,23 @@ Figure.Prototype = function() {
 
   this.getCaption = function() {
     if (this.properties.caption) return this.document.get(this.properties.caption);
+  };
+
+  this.getBlob = function() {
+    return this.document.getBlob(this.properties.image);
+  };
+
+  // Depending on wheter there is a blob it returns either the blob url or a regular image url
+  // --------
+  // 
+
+  this.getUrl = function() {
+    var blob = this.getBlob();
+    if (blob) {
+      return window.URL.createObjectURL(blob);
+    } else {
+      return this.properties.url || "styles/image-placeholder.png";
+    }
   };
 };
 
@@ -10857,34 +10901,28 @@ FigureView.Prototype = function() {
     // Wraps all resource details
 
     var bodyEl = $$('.resource-body');
-    var url;
 
+    this.imgEl = $$("img", {href: "#"});
 
+    // Prepares blobs etc. for the image
     
-
-    if (this.node.image_data) {
-      // url = "data:image/png;base64,"+this.node.image_data;
-      // var dat = new Uint8Array(JSZip.base64.decode(this.node.image_data));
-      // var bb = new Blob([dat], {type: "image/png"});
-      var blob = b64toBlob(this.node.image_data);
-      url = window.URL.createObjectURL(blob);
-    } else {
-      url = this.node.url;
-    }
-
-
-
     // Add graphic (img element)
-    var imgEl = $$('.image-wrapper', {
-      children: [$$("a", {
-        href: url,
-        title: "View image in full size",
-        target: "_blank",
-        children: [$$("img", { src: url})]
-      })]
+    this.imgWrapper = $$('.image-wrapper', {
+      contenteditable: false,
+      children: [
+        $$("input.figure-image-file", {type: "file", name: "files", "data-id": this.node.id }),
+        $$("a", {
+          href: "#",
+          title: "View image in full size",
+          target: "_blank",
+          children: [this.imgEl]
+        })
+      ]
     });
 
-    bodyEl.appendChild(imgEl);
+    bodyEl.appendChild(this.imgWrapper);
+
+    this.updateImage();
 
     var caption = this.node.getCaption();
     if (caption) {
@@ -10898,14 +10936,21 @@ FigureView.Prototype = function() {
     return this;
   };
 
+  this.updateImage = function() {
+    var url = this.node.getUrl();
+    this.imgEl.setAttribute("src", url);
+
+    $(this.imgWrapper).find('a').attr({
+      href: url
+    });
+  };
+
   // Updates image src when figure is updated by ImageUrlEditor
   // --------
   //
 
   this.onNodeUpdate = function(op) {
-    this.$('img').attr({
-      src: this.node.url
-    });
+    this.updateImage();
     this.childViews["label"].onNodeUpdate(op);
   };
 
@@ -11530,7 +11575,7 @@ IssueView.Prototype = function() {
       contenteditable: false // Make sure this is not editable!
     });
 
-    labelView.el.appendChild(creator);
+    // labelView.el.appendChild(creator);
 
     var descriptionView = this.childViews["description"] = new TextView(this.node, this.viewFactory, {property: "description"});
     this.content.appendChild(descriptionView.render().el);
@@ -15647,10 +15692,8 @@ var util = require("substance-util");
 // Substance.Surface
 // ==========================================================================
 
-var Surface = function(docCtrl, renderer, options) {
+var Surface = function(docCtrl, renderer) {
   View.call(this);
-
-  options = options || {};
 
   // Rename docCtrl to surfaceCtrl ?
   this.docCtrl = docCtrl;
@@ -15665,7 +15708,6 @@ var Surface = function(docCtrl, renderer, options) {
 
   this.listenTo(this.document, "property:updated", this.onUpdateView);
   this.listenTo(this.document, "graph:reset", this.reset);
-
 };
 
 

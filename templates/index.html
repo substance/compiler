@@ -14,13 +14,9 @@
 
   <script src="lib/jquery-2.0.3.min.js"></script>
 
-  <script src='substance.js'></script>
+  <script src='substance.min.js'></script>
 
   <script>
-
-    if (window.Substance === undefined) {
-      window.Substance = require("/src/substance.js");
-    }
 
     function isIOSDevice() {
       var iPadAgent = navigator.userAgent.match(/iPad/i) != null;
@@ -54,7 +50,8 @@
     $.get("data/content.json")
     .done(function(data) {
       $('body').empty()
-               .addClass('reader');
+               .addClass('reader')
+               .show();
       var app = new Substance({
         document: data
       });
@@ -82,7 +79,7 @@
 
   </script>
 </head>
-<body class="current-view">
+<body class="current-view" style="display: none;">
 {{{{CONTENT}}}}
 </body>
 </html>

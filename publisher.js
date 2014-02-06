@@ -129,6 +129,6 @@ copyReader(function(err) {
 
   indexHTML = indexHTML.replace("{{{{CONTENT}}}}", renderDoc(doc));
   indexHTML = indexHTML.replace("{{{{TITLE}}}}", doc.nodes.document.title);
-  fs.writeFileSync(TARGET_DIR+"/index.html", indexHTML);
+  fs.writeFileSync(TARGET_DIR+"/index.html", indexHTML, "utf8");
   console.log('now generating index file...');
 });
