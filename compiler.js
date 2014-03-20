@@ -9,7 +9,6 @@ var Renderer = function(doc, template) {
   this.template = template;
 };
 
-
 Renderer.prototype.render = function() {
   var nodes = this.doc.get('content').nodes;
   var doc = this.doc;
@@ -43,7 +42,6 @@ Renderer.prototype.render = function() {
   return html;
 };
 
-
 // Compiler
 // --------
 //
@@ -69,15 +67,9 @@ Compiler.Prototype = function() {
     // Also write binary files
     var fileIndex = doc.getIndex("files");
     var files = {};
-    console.log('writing files', fileIndex.nodes);
     _.each(fileIndex.nodes, function(fileId) {
       var file = doc.get(fileId);
       result.file(fileId, file.getData());
-
-      // var myfile = file.getData();
-      // console.log(TARGET_DIR + "/"+file.id);
-      // fs.writeFileSync(TARGET_DIR + "/"+file.id, file.getData());
-      // files[fileId] = doc.get(fileId);
     });
     return result;
   };
