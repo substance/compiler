@@ -1,1 +1,9 @@
+<header>
+<div class="published-on">Wed Mar 19 2014</div>
 <h1><%= node.title %></h1>
+<div class="authors">
+  <% node.document.getAuthors().forEach(function(a) { %>
+    <div class="author"><%= a.name %></div>  
+  <% }); %>
+</div>
+</header>
