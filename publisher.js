@@ -1,15 +1,20 @@
 var JSZip = require("jszip");
 var fs = require("fs");
-var ncp = require("ncp");
+// var ncp = require("ncp");
+var _ = require("underscore");
 
+var util = require("substance-util");
+var Compiler = require("./compiler");
+var Article = require("substance-article");
 
+// var originalZip;
 
 // Sources
 // -----------
 // 
 // http://shapeshed.com/working_with_filesystems_in_nodejs/
 
-var SOURCE_FILE = __dirname + "/data/beyond-simulating-paper.sdf";
+var SOURCE_FILE = __dirname + "/data/substance-network.sdf.zip";
 var TARGET_DIR = __dirname + "/out";
 var INDEX_TEMPLATE = __dirname + "/templates/index.html";
 
@@ -26,42 +31,51 @@ function copyFileSync(source, target) {
 // 
 // Takes a Substance document (zip archive including assets) and unpacks it into a destination folder
 
-function unpack(sourceFile, targetDir) {
+function unpack(sourceFile) {
   var docData = fs.readFileSync(sourceFile);
-  var zip = new JSZip(docData);
 
-  if (!fs.existsSync(TARGET_DIR + "/data")) {
-    fs.mkdirSync(TARGET_DIR + "/data");
-  }
+  var doc = util.zip.unzipFromArrayBuffer(docData, {
+    createFromJSON: Article.fromSnapshot
+  });
+  return doc;
+}
 
-  var rawDoc = zip.files["content.json"].asText();
-  var jsonDoc = JSON.parse(rawDoc);
+// function unpack(sourceFile, targetDir) {
+//   var docData = fs.readFileSync(sourceFile);
+//   var zip = new JSZip(docData);
+
+//   if (!fs.existsSync(TARGET_DIR + "/data")) {
+//     fs.mkdirSync(TARGET_DIR + "/data");
+//   }
+
+//   var rawDoc = zip.files["content.json"].asText();
+//   var jsonDoc = JSON.parse(rawDoc);
 
   
-  console.log('extracted document to out/*');
+//   console.log('extracted document to out/*');
 
-  var figures = jsonDoc.nodes.figures.nodes;
+//   var figures = jsonDoc.nodes.figures.nodes;
 
-  figures.forEach(function(figId) {
-    var fig = jsonDoc.nodes[figId];
-    var data = zip.files[fig.url].asNodeBuffer();
-    fs.writeFileSync(targetDir +"/data/"+fig.url, data);
-  });
+//   figures.forEach(function(figId) {
+//     var fig = jsonDoc.nodes[figId];
+//     var data = zip.files[fig.url].asNodeBuffer();
+//     fs.writeFileSync(targetDir +"/data/"+fig.url, data);
+//   });
 
-  // Post processing of document file
-  // ----------------
-  // Adapt figure urls
+//   // Post processing of document file
+//   // ----------------
+//   // Adapt figure urls
 
-  var figures = jsonDoc.nodes.figures.nodes;
-  figures.forEach(function(figId) {
-    var fig = jsonDoc.nodes[figId];
-    fig.url = "data/"+fig.url;
-  });
-  fs.writeFileSync(TARGET_DIR + "/data/content.json", JSON.stringify(jsonDoc, null, '  '), "utf8");
+//   var figures = jsonDoc.nodes.figures.nodes;
+//   figures.forEach(function(figId) {
+//     var fig = jsonDoc.nodes[figId];
+//     fig.url = "data/"+fig.url;
+//   });
+//   fs.writeFileSync(TARGET_DIR + "/data/content.json", JSON.stringify(jsonDoc, null, '  '), "utf8");
 
-  console.log('Substance doc successfully extracted:', sourceFile);
-  return jsonDoc;
-};
+//   console.log('Substance doc successfully extracted:', sourceFile);
+//   return jsonDoc;
+// };
 
 
 // Copy latest reader distribution to target
@@ -69,66 +83,85 @@ function unpack(sourceFile, targetDir) {
 // 
 // Takes a Substance document (zip archive including assets) and unpacks it into a destination folder
 
-function copyReader(cb) {
-  ncp(__dirname+"/node_modules/substance-reader/dist", TARGET_DIR, cb);
-  // var sys = require('sys')
-  // var exec = require('child_process').exec;
-  // function puts(error, stdout, stderr) {
-  //   sys.puts(stdout);
-  // }
-  // exec("cpFileSync", puts);
-  // copyFileSync(__dirname+"/node_modules/substance-reader/dist/substance.js", TARGET_DIR+"/substance.js");
-}
+// function copyReader(cb) {
+//   // ncp(__dirname+"/node_modules/substance-reader/dist", TARGET_DIR, cb);
+//   // var sys = require('sys')
+//   // var exec = require('child_process').exec;
+//   // function puts(error, stdout, stderr) {
+//   //   sys.puts(stdout);
+//   // }
+//   // exec("cpFileSync", puts);
+//   // copyFileSync(__dirname+"/node_modules/substance-reader/dist/substance.js", TARGET_DIR+"/substance.js");
+// }
 
 
-function renderDoc(doc) {
-  var contentNodes = doc.nodes.content.nodes;
-  var figureNodes = doc.nodes.figures.nodes;
+// function renderDoc(doc) {
+//   var contentNodes = doc.nodes.content.nodes;
+//   var figureNodes = doc.nodes.figures.nodes;
 
-  var res = ["<h1>"+doc.nodes.document.title+"</h1>"];
-  // Render main content nodes
-  contentNodes.forEach(function(nodeId) {
-    var node = doc.nodes[nodeId];
-    if (node.type === "heading") {
-      res.push("<h2>"+node.content+"</h2>");
-    } else if (node.type === "text") {
-      res.push("<p>"+node.content+"</p>");
-    }
-  });
+//   var res = ["<h1>"+doc.nodes.document.title+"</h1>"];
+//   // Render main content nodes
+//   contentNodes.forEach(function(nodeId) {
+//     var node = doc.nodes[nodeId];
+//     if (node.type === "heading") {
+//       res.push("<h2>"+node.content+"</h2>");
+//     } else if (node.type === "text") {
+//       res.push("<p>"+node.content+"</p>");
+//     }
+//   });
 
-  var figureNodes = doc.nodes.figures.nodes;
+//   var figureNodes = doc.nodes.figures.nodes;
 
-  res.push("<h2>Figures</h2>");
-  figureNodes.forEach(function(nodeId) {
-    var figure = doc.nodes[nodeId];
+//   res.push("<h2>Figures</h2>");
+//   figureNodes.forEach(function(nodeId) {
+//     var figure = doc.nodes[nodeId];
 
-    res.push("<h3>"+figure.label+"</h3>");
-    console.log('##########FIGURL', figure.url);
-    res.push('<img src="'+figure.url+'"/>');
-    var caption = doc.nodes[figure.caption];
-    if (caption) {
-      res.push("<p>"+caption.content+"</p>");
-    }
-  });
-  
+//     res.push("<h3>"+figure.label+"</h3>");
+//     console.log('##########FIGURL', figure.url);
+//     res.push('<img src="'+figure.url+'"/>');
+//     var caption = doc.nodes[figure.caption];
+//     if (caption) {
+//       res.push("<p>"+caption.content+"</p>");
+//     }
+//   });
+//   return res.join("\n");
+// }
 
-  return res.join("\n");
-}
+
+// Construct new document
+// ----------
+
+var doc = unpack(SOURCE_FILE);
+var compiler = new Compiler(doc);
+var webDocumentZip = compiler.compile("default");
+
+// Write to disk
+_.each(webDocumentZip.files, function(file, fileName) {
+  if (fileName.indexOf("html")>=0 || fileName.indexOf("css")>=0) {
+    fs.writeFileSync(TARGET_DIR + "/"+fileName, file.asText(), "utf8");  
+  } else {
+    fs.writeFileSync(TARGET_DIR + "/"+fileName, file.asNodeBuffer());  
+  }
+    
+});
+
+
+
+
 
 
 // 1. Copy bundled reader to TARGET_DIR
+// copyReader(function(err) {
+//   // check errors ?
 
-copyReader(function(err) {
-  // check errors ?
+//   // 2. Unpack Substance doc to TARGET_DIR/data
+//   var doc = unpack(SOURCE_FILE, TARGET_DIR);
 
-  // 2. Unpack Substance doc to TARGET_DIR/data
-  var doc = unpack(SOURCE_FILE, TARGET_DIR);
+//   // 3. Generate customized index file 
+//   var indexHTML = fs.readFileSync(INDEX_TEMPLATE, "utf8");
 
-  // 3. Generate customized index file 
-  var indexHTML = fs.readFileSync(INDEX_TEMPLATE, "utf8");
-
-  indexHTML = indexHTML.replace("{{{{CONTENT}}}}", renderDoc(doc));
-  indexHTML = indexHTML.replace("{{{{TITLE}}}}", doc.nodes.document.title);
-  fs.writeFileSync(TARGET_DIR+"/index.html", indexHTML, "utf8");
-  console.log('now generating index file...');
-});
+//   indexHTML = indexHTML.replace("{{{{CONTENT}}}}", renderDoc(doc));
+//   indexHTML = indexHTML.replace("{{{{TITLE}}}}", doc.nodes.document.title);
+//   fs.writeFileSync(TARGET_DIR+"/index.html", indexHTML, "utf8");
+//   console.log('now generating index file...');
+// });

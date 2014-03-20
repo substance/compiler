@@ -1,0 +1,220 @@
+/*
+    Reset Ã¢â„¢Â¥
+    http://meyerweb.com/eric/tools/css/reset/
+    v2.0 | 20110126
+    License: none (public domain)
+------------------------------------------------------- */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin:0;
+  padding:0;
+  border:0;
+  font-size:100%;
+  font:inherit;
+  vertical-align:baseline;
+  }
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display:block;
+  }
+body { line-height:1; }
+ol, ul { list-style:none;  }
+blockquote, q { quotes:none; }
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+/* tables still need 'cellspacing="0"' in the markup */
+table { border-collapse: collapse; border-spacing:0; }
+/* remember to define focus styles. Hee Haw */
+:focus { outline:0; }
+
+
+*, *:after, *:before {
+  -webkit-box-sizing:border-box;
+     -moz-box-sizing:border-box;
+          box-sizing:border-box;
+  }
+
+/*
+  This is a stripped down version of Mapbox base.css
+  https://www.mapbox.com/base/latest/base.css
+------------------------------------------------------- */
+
+
+/* Inline Elements: Defaults
+------------------------------------------------------- */
+body,
+input,
+textarea {
+  color:#404040;
+  color:rgba(0,0,0,0.75);
+  font: 18px 'Open Sans', sans-serif;
+  -webkit-font-smoothing:antialiased;
+  }
+
+body { background:#fff; }
+.dark { color:#fff; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:'Open Sans', sans-serif;
+  font-weight:bold;
+  margin:0;
+  }
+
+em h1, h1 em,
+em h2, h2 em,
+em h3, h3 em,
+em h4, h4 em,
+em h5, h5 em,
+em h6, h6 em {
+  font-family:'Open Sans', sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  }
+
+h1 {
+  font-size:30px;
+  line-height:40px;
+  letter-spacing:-1px;
+  }
+h2 {
+  font-size:22px;
+  line-height:30px;
+  padding-top: 5px;
+  padding-bottom:5px;
+  }
+
+h3 {
+  font-size:15px;
+  line-height:20px;
+  }
+
+h4, h5, h6 {
+  font-size:12px;
+  line-height:20px;
+  }
+
+p { margin-bottom:20px; }
+
+p:last-child { margin-bottom:0; }
+
+small,
+.prose.small,
+.small {
+  font-size:12px;
+  line-height:20px;
+  letter-spacing:0;
+  }
+
+small { display:block; }
+
+.strong,
+strong {
+  font-family:'Open Sans Bold', sans-serif;
+  font-weight:normal;
+  }
+  strong em,
+  em strong { font-family:'Open Sans Bold Italic', sans-serif; }
+
+address,
+em {
+  font-family:'Open Sans Italic', sans-serif;
+  }
+
+/* Links */
+a,
+a code {
+  color:#3887BE;
+  text-decoration:none;
+  }
+  a:hover code,
+  a:hover { color:#63b6e5; }
+  a:focus {
+    -webkit-box-shadow:inset 0 0 0 1px rgba(0,0,0,0.05);
+            box-shadow:inset 0 0 0 1px rgba(0,0,0,0.05);
+  }
+
+.dark a,
+.dark a code  { color:#63b6e5; }
+.dark a:hover code,
+.dark a:hover { color:#8fcaec; }
+.dark a:focus {
+  -webkit-box-shadow:inset 0 0 0 1px rgba(256,256,256,0.05);
+          box-shadow:inset 0 0 0 1px rgba(256,256,256,0.05);
+  }
+
+a.quiet       { color:rgba(0,0,0,0.5);  }
+a.quiet.active, a.quiet:hover { color:rgba(0,0,0,0.75); }
+
+.dark a.quiet,
+a.quiet.dark { color:rgba(255,255,255,0.5); }
+
+.dark a.quiet:hover,
+a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
+
+
+
+
+
+
+/* Article styles
+------------------------------------------------------- */
+
+.article {
+  max-width: 700px;
+  margin: 0px auto;
+}
+
+.figure {
+  text-align: center;
+}
+
+.figure img {
+  max-width: 100%;
+}
+
+
+
+/* Print
+------------------------------------------------------- */
+
+@media print {
+
+  /* Inline rules */
+  body, input, textarea, p {
+    color:#000;
+    font:12px/20px 'Open Sans', sans-serif;
+    }
+  .prose a:after { content:' [' attr(href) '] '; }
+
+  /* Cut pad rules in half, matches mobile rules */
+  .pad4   { padding:20px; }
+  .pad8   { padding:40px 20px; }
+  .pad4y  { padding-top:20px; padding-bottom:20px; }
+  .pad4x  { padding-left:20px; padding-right:20px; }
+  .pad2   { padding:10px; }
+  .pad2y  { padding-top:10px; padding-bottom:10px; }
+  .pad2x  { padding-right:10px; padding-left:10px; }
+
+  /* Icon sprites dont show up be default so kill'em */
+  .rcon:after, .icon:before { width:0; height:0; }
+
+  /* TODO Depreciate */
+  .noprint { display:none; }
+  }
