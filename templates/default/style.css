@@ -171,14 +171,38 @@ a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
 
 
 
-
-
 /* Article styles
 ------------------------------------------------------- */
 
 .article {
   max-width: 700px;
   margin: 0px auto;
+  padding: 50px 20px;
+  line-height: 32px;
+}
+
+
+/* Cover */
+
+header {
+  padding-bottom: 80px;
+}
+
+header h1 {
+  font-weight: 600;
+  font-size: 40px;
+}
+
+header .authors {
+  color: #777;
+  /*font-size: 14px;*/
+  padding-top: 20px;
+  overflow: auto;
+}
+
+header .author {
+  float: left;
+  margin-right: 20px;
 }
 
 .figure {
