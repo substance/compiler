@@ -71,6 +71,8 @@ Compiler.Prototype = function() {
       var file = doc.get(fileId);
       result.file(fileId, file.getData());
     });
+
+    
     return result;
   };
 };
