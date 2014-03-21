@@ -50,7 +50,6 @@ var Compiler = function(doc) {
   this.doc = doc;
 };
 
-
 Compiler.Prototype = function() {
 
   this.compile = function(template) {
