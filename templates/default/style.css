@@ -46,6 +46,7 @@ table { border-collapse: collapse; border-spacing:0; }
           box-sizing:border-box;
   }
 
+
 /*
   This is a stripped down version of Mapbox base.css
   https://www.mapbox.com/base/latest/base.css
@@ -73,7 +74,7 @@ h4,
 h5,
 h6 {
   font-family:'Open Sans', sans-serif;
-  font-weight:bold;
+  font-weight:600;
   margin:0;
   margin-top: 50px;
   }
@@ -85,7 +86,7 @@ em h4, h4 em,
 em h5, h5 em,
 em h6, h6 em {
   font-family:'Open Sans', sans-serif;
-  font-weight: bold;
+  font-weight: 600;
   font-style: italic;
   }
 
@@ -211,6 +212,12 @@ header .author {
 
 .figure {
   text-align: center;
+  padding-bottom: 20px;
+}
+
+.figure .caption {
+  font-size: 14px;
+  color: #777;
 }
 
 .figure img {
@@ -219,10 +226,11 @@ header .author {
 
 
 .footer {
-
-  border-radius: 3px;
-  /*border: 1px solid #eee;*/
-  /*background: #444;*/
+  text-align: center;
+  border-top: 1px solid #eee;
+  font-style: italic;
+  font-size: 14px;
+  color: #777;
   max-width: 700px;
   margin: 0px auto;
   padding: 50px 20px;
