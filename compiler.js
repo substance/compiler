@@ -62,6 +62,7 @@ Compiler.Prototype = function() {
     result.file("index.html", indexHTML);
     var cssFile = fs.readFileSync(__dirname+"/templates/"+template+"/style.css", "utf8");
     result.file("style.css", cssFile);
+    result.file("content.json", JSON.stringify(doc.toJSON(), null, "  "));
 
     // Also write binary files
     var fileIndex = doc.getIndex("files");
