@@ -60,8 +60,19 @@ Compiler.Prototype = function() {
     var indexHTML = new Renderer(this.doc, "default").render();
 
     result.file("index.html", indexHTML);
+
     var cssFile = fs.readFileSync(__dirname+"/templates/"+template+"/style.css", "utf8");
     result.file("style.css", cssFile);
+
+    var jqueryJS = fs.readFileSync(__dirname+"/templates/"+template+"/jquery-2.1.0.min.js", "utf8");
+    result.file("jquery-2.1.0.min.js", jqueryJS);
+
+    var underscoreJS = fs.readFileSync(__dirname+"/templates/"+template+"/underscore.js", "utf8");
+    result.file("underscore.js", underscoreJS);
+
+    var appJS = fs.readFileSync(__dirname+"/templates/"+template+"/app.js", "utf8");
+    result.file("app.js", appJS);
+
     result.file("content.json", JSON.stringify(doc.toJSON(), null, "  "));
 
     // Also write binary files

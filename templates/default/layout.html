@@ -5,19 +5,36 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
   <title><%= doc.title %></title>
   <link href="style.css" rel="stylesheet" />
+  <script src="jquery-2.1.0.min.js"></script>
+  <script src="underscore.js"></script>
+  <script src="app.js"></script>
 
 </head>
 <body>
 
 <div class="article">
 <%= render(doc) %>
+
+<div id="publication_info" class="content-node publication-info">
+  <div class="content">
+    <div class="label">Authors</div>
+    <div class="label">Michael Aufreiter</div>
+    <div class="label">Oliver Buchtala</div>
+  </div>
 </div>
 
-<div class="footer">
-  This article has been published with <a href="http://substance.io">Substance</a>, an open platform for digital content. You can download the <a href="http://example.com">article</a>, and edit in the <a href="substance.io/composer-alpha">Substance Composer</a> application. If you spotted an error, why not sending the author your reviewed version?
 </div>
+
+<script>
+  $(function() {
+    var articleEl = $('.article')[0];
+    var app = new Reader(articleEl);
+    app.start();
+  });
+</script>
 </body>
 </html>

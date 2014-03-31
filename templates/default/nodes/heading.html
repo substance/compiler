@@ -1,2 +1,6 @@
 <% var lvl = node.level + 1; %>
-<h<%= lvl %> id="<%= node.id %>"><%= node.content %></h<%= lvl %>>
+<div id="<%= node.id %>" class="content-node heading level-<%= lvl %>">
+  <div class="content">
+    <h<%= lvl %>><%= node.content %></h<%= lvl %>>
+  </div>
+</div>
