@@ -343,36 +343,64 @@ pre {
   border: 1px dashed #ccc;
 }
 
+.content-node.publication-info {
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
 
+/* Publication info card */
+.content-node.publication-info .label {
+  padding-top: 30px;
+  font-size: 12px;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 600;
+}
 
-.footer {
-  text-align: center;
-  border-top: 1px solid #eee;
-  font-style: italic;
-  font-size: 14px;
-  color: #777;
-  max-width: 700px;
-  margin: 0px auto;
-  padding: 50px 20px;
-  line-height: 32px;
-  /*margin-bottom: 60px;*/
+.content-node.publication-info .authors .author {
+  padding-bottom: 30px;
+  overflow: auto;
+}
+
+.content-node.publication-info .authors .author-name {
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+.content-node.publication-info .authors .author-description {
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.content-node.publication-info .authors .author-image {
+  max-width: 100px;
+  float: left;
+  padding-right: 20px;
 }
 
 
+.content-node.publication-info .supplements {
+  font-size: 15px;
+}
+
+.content-node.publication-info .supplements .file-name {
+  font-size: 24px;
+}
+
+.content-node.publication-info .copyright {
+  font-size: 15px;
+}
+
+.content-node.publication-info .copyright .license {
+  padding-top: 20px;
+}
 
 
 /*
 Outline
 --------------------------------------- */
 
-::-webkit-scrollbar {
-  width: 2px;
-  height: 2px;
-}
 
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0);
-}
 
 .lens-outline {
   background: white;
@@ -481,6 +509,18 @@ Outline
   .content-node.cover {
     padding-top: 20px;
     padding-bottom: 30px;
+  }
+}
+
+
+@media (min-width: 651px) {
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0);
   }
 }
 

@@ -149,7 +149,6 @@ Outline.Prototype = function() {
 
       fragment.appendChild($node[0]);
       totalHeight += height;
-
     });
 
     // Init scroll pos
@@ -169,9 +168,11 @@ Outline.Prototype = function() {
   // Should get called from the user when the content area is scrolled
 
   this.updateVisibleArea = function(scrollTop) {
+    var targetWidth = $(window).height() / this.factor;
     $(this.visibleArea).css({
+      // TODO: add correction to top: so handle works on lower bound
       "top": scrollTop / this.factor,
-      "height": $(window).height() / this.factor
+      "height": Math.max(targetWidth, 20)
     });
   };
 
@@ -220,7 +221,6 @@ Outline.Prototype = function() {
       var y = e.clientY;
       // find offset to visible-area.top
       var scroll = (y - this.offset)*this.factor;
-      console.log("Y", e.clientY, this.factor);
       $(window).scrollTop(scroll);
     }
   };
@@ -233,6 +233,8 @@ Outline.prototype = new Outline.Prototype();
 // ==========================================================================
 
 var Reader = function(articleEl) {
+  var that = this;
+
   this.articleEl = articleEl;
   this.colors = new ColorPool(COLOR_PALETTES);
   
@@ -241,8 +243,12 @@ var Reader = function(articleEl) {
     bookmarks: {}
   };
 
+  // Attempt restoring bookmarks from localStorage
   this.restoreBookmarks();
+
   $(this.articleEl).on('click', '.toggle-bookmark', _.bind(this.toggleBookmark, this));
+
+  $('img').on('load', _.bind(this.rerenderOutline, this));
 };
 
 
@@ -322,6 +328,12 @@ Reader.Prototype = function() {
     }
   };
 
+
+  this.rerenderOutline = function() {
+    this.outline.render();
+    this.outline.updateVisibleArea($(window).scrollTop());
+  };
+
   this.toggleBookmark = function(e) {
     var nodeId = $(e.currentTarget).closest('.content-node').attr('id');
     var bookmark = this.state.bookmarks[nodeId];
@@ -352,8 +364,7 @@ Reader.Prototype = function() {
     });
 
     $(window).resize(function() {
-      that.outline.render();
-      that.outline.updateVisibleArea($(window).scrollTop());
+      that.rerenderOutline();
     });
   };
 };

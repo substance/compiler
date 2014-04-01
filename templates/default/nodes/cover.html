@@ -4,7 +4,7 @@
 <h1><%= node.title %></h1>
 <div class="authors">
   <% node.document.getAuthors().forEach(function(a) { %>
-    <div class="author"><%= a.name %></div>  
+    <a href="#<%= a.id %>" class="author"><%= a.name %></a>  
   <% }); %>
 </div>
 </div>
