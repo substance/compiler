@@ -193,8 +193,8 @@ Outline.Prototype = function() {
     } else {
       this.offset = y - $(this.visibleArea).position().top;
     }
-
-    return false;
+    e.preventDefault();
+    e.stopPropagation();
   };
 
   // Handle Mouse Up
