@@ -94,8 +94,11 @@ Renderer.prototype.render = function() {
 
   var compiledLayout = _.template(layoutTpl);
 
+  var fileName = util.slug(doc.title)+".sdf";
+
   var html = compiledLayout({
     doc: doc,
+    filename: fileName,
     render: function() {
       var htmlElements = [];
 
@@ -153,6 +156,7 @@ Compiler.Prototype = function() {
     result.file("app.js", appJS);
 
     result.file("content.json", JSON.stringify(doc.toJSON(), null, "  "));
+
 
     // Also write binary files
     var fileIndex = doc.getIndex("files");
