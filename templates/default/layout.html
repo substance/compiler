@@ -46,11 +46,16 @@
 
     <div class="copyright">
       <div class="label">Copyright</div>
+      <% var license = doc.get('license'); %>
+
       <div class="copyright-statement">
-        Copyright &copy; 2014 <%= doc.getAuthors().map(function(a) { return a.name; }).join(', ') %>
+        Copyright &copy; 2014 <%= doc.getAuthors().map(function(a) { console.log("aa", a); return a.name; }).join(', ') %>
       </div>
       <div class="license">
-        This article is distributed under the terms of the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</a>, which permits unrestricted use and redistribution provided that the original author and source are credited.
+        <%= license.description %>
+        <% if (license.url) { %>
+        See <a href="<%= license.url %>"><%= license.name %></a>
+        <% } %>
       </div>
     </div>
 

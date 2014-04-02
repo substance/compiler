@@ -205,7 +205,6 @@ Outline.Prototype = function() {
 
   this.mouseUp = function() {
     this._mouseDown = false;
-    console.log('Meh');
   };
 
   // Handle Scroll
