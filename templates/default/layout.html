@@ -49,12 +49,13 @@
       <% var license = doc.get('license'); %>
 
       <div class="copyright-statement">
-        Copyright &copy; 2014 <%= doc.getAuthors().map(function(a) { console.log("aa", a); return a.name; }).join(', ') %>
+
+        Copyright &copy; <%= new Date(doc.published_on).getFullYear() %> <%= doc.getAuthors().map(function(a) { console.log("aa", a); return a.name; }).join(', ') %>
       </div>
       <div class="license">
         <%= license.description %>
         <% if (license.url) { %>
-        See <a href="<%= license.url %>"><%= license.name %></a>
+        See <a href="<%= license.url %>"><%= license.name %></a>.
         <% } %>
       </div>
     </div>

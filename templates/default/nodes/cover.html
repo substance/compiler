@@ -1,6 +1,6 @@
 <div id="cover" class="content-node cover">
 <div class="content">
-<div class="published-on">Wed Mar 19 2014</div>
+<div class="published-on"><%= new Date(node.document.published_on).toDateString() %></div>
 <h1><%= annotated(['cover', 'title']) %></h1>
 <div class="authors">
   <% node.document.getAuthors().forEach(function(a) { %>
