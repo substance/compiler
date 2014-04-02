@@ -1,6 +1,6 @@
 <% var lvl = node.level + 1; %>
 <div id="<%= node.id %>" class="content-node heading level-<%= lvl %>">
   <div class="content">
-    <h<%= lvl %>><%= node.content %></h<%= lvl %>>
+    <h<%= lvl %>><%= annotated([node.id, 'content']) %></h<%= lvl %>>
   </div>
 </div>

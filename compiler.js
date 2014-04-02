@@ -3,10 +3,86 @@
 var _ = require("underscore");
 var JSZip = require("jszip");
 var fs = require("fs");
+var util = require("substance-util");
+var Fragmenter = util.Fragmenter;
 
 var Renderer = function(doc, template) {
   this.doc = doc;
   this.template = template;
+};
+
+var renderAnnotatedContent = function(doc, propertyPath) {
+  var property = doc.resolve(propertyPath);
+  var content = property.get();
+  var annotations = doc.getIndex("annotations").get(propertyPath);
+
+  var fragmenter = new Fragmenter({
+    // citation_references should not be broken by other annotations
+    // so the get a low fragmentation level
+    citation_reference: 0
+  });
+  var annotatedContent = [];
+
+  // called for raw text blocks
+  fragmenter.onText = function(context, text) {
+    annotatedContent.push(text);
+  };
+
+  // called when an annotation starts
+  // we write out an opening HTML tag
+  fragmenter.onEnter = function(entry) {
+    switch (entry.type) {
+    case "strong":
+      annotatedContent.push("<strong>");
+      break;
+    case "emphasis":
+      annotatedContent.push("<em>");
+      break;
+    case "code":
+      annotatedContent.push("<code>");
+      break;
+    case "subscript":
+      annotatedContent.push("<sub>");
+      break;
+    case "superscript":
+      annotatedContent.push("<sup>");
+      break;
+    case "citation_reference":
+      var ref = doc.get(entry.id);
+      var webPage = doc.get(ref.target);
+      annotatedContent.push("<a href=\"" + webPage.url + "\" title=\"" + webPage.description + "\">");
+      break;
+    }
+  };
+
+  // called when an annotation is finished
+  // we write out a closing tag
+  fragmenter.onExit = function(entry) {
+    switch (entry.type) {
+    case "strong":
+      annotatedContent.push("</strong>");
+      break;
+    case "emphasis":
+      annotatedContent.push("</em>");
+      break;
+    case "code":
+      annotatedContent.push("</code>");
+      break;
+    case "subscript":
+      annotatedContent.push("</sub>");
+      break;
+    case "superscript":
+      annotatedContent.push("</sup>");
+      break;
+    case "citation_reference":
+      annotatedContent.push("</a>");
+      break;
+    }
+  };
+
+  fragmenter.start(null, content, annotations);
+
+  return annotatedContent.join("");
 };
 
 Renderer.prototype.render = function() {
@@ -17,12 +93,12 @@ Renderer.prototype.render = function() {
   var layoutTpl = fs.readFileSync(__dirname+"/templates/"+templateName+"/layout.html", "utf8");
 
   var compiledLayout = _.template(layoutTpl);
-  
+
   var html = compiledLayout({
     doc: doc,
     render: function() {
       var htmlElements = [];
-      
+
       // Render nodes
       // -------------
 
@@ -32,7 +108,10 @@ Renderer.prototype.render = function() {
         var compiledNodeTpl = _.template(nodeTpl);
 
         htmlElements.push(compiledNodeTpl({
-          node: node
+          node: node,
+          annotated: function(propertyPath) {
+            return renderAnnotatedContent(doc, propertyPath);
+          }
         }));
       });
       return htmlElements.join('\n');
@@ -77,12 +156,11 @@ Compiler.Prototype = function() {
 
     // Also write binary files
     var fileIndex = doc.getIndex("files");
-    var files = {};
     _.each(fileIndex.nodes, function(fileId) {
       var file = doc.get(fileId);
       result.file(fileId, file.getData());
     });
-    
+
     return result;
   };
 };

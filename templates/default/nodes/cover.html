@@ -1,10 +1,10 @@
 <div id="cover" class="content-node cover">
 <div class="content">
 <div class="published-on">Wed Mar 19 2014</div>
-<h1><%= node.title %></h1>
+<h1><%= annotated(['cover', 'title']) %></h1>
 <div class="authors">
   <% node.document.getAuthors().forEach(function(a) { %>
-    <a href="#<%= a.id %>" class="author"><%= a.name %></a>  
+    <a href="#<%= a.id %>" class="author"><%= a.name %></a>
   <% }); %>
 </div>
 </div>
