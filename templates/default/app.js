@@ -114,7 +114,7 @@ Outline.Prototype = function() {
     // Content height is smaller as the panel height, we don't need a scrollbar
     if (panelHeight >= contentHeight) {
       this.el.innerHTML = "";
-      return;
+      return this;
     }
 
     // Render nodes
