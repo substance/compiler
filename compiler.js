@@ -49,8 +49,8 @@ var renderAnnotatedContent = function(doc, propertyPath) {
       break;
     case "citation_reference":
       var ref = doc.get(entry.id);
-      var webPage = doc.get(ref.target);
-      annotatedContent.push("<a href=\"" + webPage.url + "\" title=\"" + webPage.description + "\">");
+      var webResource = doc.get(ref.target);
+      annotatedContent.push("<a href=\"" + webResource.url + "\" title=\"" + webResource.description + "\">");
       break;
     }
   };
