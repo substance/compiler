@@ -26,16 +26,27 @@
 
 <div id="publication_info" class="content-node publication-info">
   <div class="content">
-    <div class="authors">
-      <div class="label">Authors</div>
-      <% doc.getAuthors().forEach(function(a) { %>
-        <div class="author" id="<%= a.id %>">
-          <div class="author-name"><%= a.name %></div>
-          <img class="author-image" src="<%= a.image %>"/>
-          <div class="author-description"><%= a.description %></div>
-        </div>
-      <% }); %>
-    </div>
+
+    <% var authors = []; %>
+    <%
+      doc.getAuthors().forEach(function(a) {
+        if (a.description) authors.push(a);
+      });
+    %>
+    <% if (authors.length > 0) { %>
+      <div class="authors">
+        <div class="label">Authors</div>
+        <% authors.forEach(function(a) { %>
+          <div class="author" id="<%= a.id %>">
+            <div class="author-name"><%= a.name %></div>
+            <img class="author-image" src="<%= a.image %>"/>
+            <div class="author-description"><%= a.description %></div>
+          </div>
+        <% }); %>
+      </div>    
+    <% } %>
+
+
     <div class="supplements">
       <div class="label">Supplements</div>
       <div class="file">
@@ -49,8 +60,8 @@
       <% var license = doc.get('license'); %>
 
       <div class="copyright-statement">
-
-        Copyright &copy; <%= new Date(doc.published_on).getFullYear() %> <%= doc.getAuthors().map(function(a) { console.log("aa", a); return a.name; }).join(', ') %>
+        Copyright &copy; <%= new Date(doc.published_on).getFullYear() %>
+        <%= authors.map(function(a) { return a.name; }).join(', ') %>
       </div>
       <div class="license">
         <%= license.description %>
