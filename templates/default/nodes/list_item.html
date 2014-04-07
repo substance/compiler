@@ -1,5 +1,5 @@
-<div id="<%= node.id %>" class="content-node list-item">
+<div id="<%= node.id %>" class="content-node list-item level-<%= node.level %>">
 <div class="content">
-  <li><%= annotated([node.id, 'content']) %></li>
+  <%= annotated([node.id, 'content']) %>
 </div>
 </div>

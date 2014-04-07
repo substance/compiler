@@ -161,8 +161,6 @@ a.quiet.dark { color:rgba(255,255,255,0.5); }
 a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
 
 
-
-
 /* Article styles
 ------------------------------------------------------- */
 
@@ -177,6 +175,43 @@ a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
   /*border-left: 2px solid #444;*/
   padding: 5px 90px;
   position: relative;
+}
+
+
+
+.content-node.list-item {
+  /*padding-left: -20px;*/
+}
+
+.content-node.list-item.level-1 .content {
+  position: relative;
+  left: 20px;
+  padding-right: 20px;
+}
+
+.content-node.list-item.level-2 .content {
+  position: relative;
+  left: 40px;
+  padding-right: 40px;
+}
+
+.content-node.list-item.level-3 .content {
+  position: relative;
+  left: 60px;
+  padding-right: 60px;
+}
+
+.content-node.list-item.level-4 .content {
+  position: relative;
+  left: 80px;
+  padding-right: 80px;
+}
+
+
+.content-node.list-item .content {
+  /*min-height: 40px;*/
+  display:list-item;
+  list-style-type:square;
 }
 
 .content-node .toggle-bookmark {
