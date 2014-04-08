@@ -55,6 +55,7 @@
       </div>
     </div>
 
+    <% if (authors.length > 0) { %>
     <div class="copyright">
       <div class="label">Copyright</div>
       <% var license = doc.get('license'); %>
@@ -70,6 +71,7 @@
         <% } %>
       </div>
     </div>
+    <% } %>
 
   </div>
 </div>
