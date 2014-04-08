@@ -357,6 +357,32 @@ a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
   max-width: 100%;
 }
 
+/* Web Page */
+
+.content-node.web-page {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.content-node.web-page .caption {
+  font-size: 14px;
+  color: #777;
+}
+
+.content-node.web-page .page-wrapper {
+  max-width: 400px;
+  height: 400px;
+  margin: auto;
+  background: #ccc;
+}
+
+.content-node.web-page .page-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
 pre {
   font-family: 'Monaco';
   color: #777;
