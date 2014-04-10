@@ -262,7 +262,7 @@ Reader.Prototype = function() {
     contentNodes.each(function(node) {
       var nodeId = $(this).attr('id');
 
-      if ($(this).hasClass('level-2')) {
+      if ($(this).hasClass('level-2') || $(this).hasClass('publication-info')) {
         color = that.colors.getNext();
       }
       

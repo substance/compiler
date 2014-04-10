@@ -310,7 +310,45 @@ a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
 
 .content-node.cover {
   padding-top: 80px;
-  padding-bottom: 80px;
+  padding-bottom: 20px;
+
+}
+
+
+.content-node.cover .toc {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-top: 50px;
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+
+.content-node.cover .toc .toc-title {
+  display: none;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+
+.content-node.cover .toc .toc-entry {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+
+.content-node.cover .toc .toc-entry.level-1 {
+  padding: 10px 0;
+}
+
+.content-node.cover .toc .toc-entry.level-2 {
+  font-size: 16px;
+}
+
+.content-node.cover .toc .toc-entry.level-3 {
+  font-size: 14px;
+}
+
+.content-node.cover .toc .toc-entry.level-4 {
+  font-size: 12px;
 }
 
 .content-node.cover h1 {

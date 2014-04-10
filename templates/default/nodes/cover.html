@@ -7,5 +7,27 @@
     <a href="#<%= a.id %>" class="author"><%= a.name %></a>
   <% }); %>
 </div>
+
+<% 
+  var headings = [];
+  var doc = node.document;
+  var nodes = doc.get('content').nodes;
+  _.each(nodes, function(nodeId) {
+    var node = doc.get(nodeId);
+    if (node.type === "heading") headings.push(node);
+  });
+%> 
+
+<% if (headings.length>7) { %>
+<div class="toc">
+  <div class="toc-title">Contents </div>
+  <div class="toc-entries">
+    <% _.each(headings, function(heading) { %>
+      <div class="toc-entry level-<%= heading.level %>"><a href="#<%= heading.id %>"><%= heading.content %></a></div>
+    <% }); %>
+  </div>
+</div>
+<% } %>
+
 </div>
 </div>
