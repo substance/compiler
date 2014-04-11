@@ -103,7 +103,13 @@ h2 {
   padding-bottom:10px;
   }
 
-h3, h4, h5 {
+h3 {
+  font-size:16px;
+  line-height:20px;
+  padding-bottom:10px;
+  }
+
+h4, h5 {
   font-size:12px;
   line-height:20px;
   padding-bottom:10px;
@@ -156,6 +162,13 @@ a.quiet.dark { color:rgba(255,255,255,0.5); }
 .dark a.quiet:hover,
 a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
 
+
+code {
+  font-family: Menlo, Bitstream Vera Sans Mono, Monaco, Consolas, monospace;
+  background: #f1f1f1;
+  padding: 0 4px;
+  font-size: 15px;
+}
 
 /* Article styles
 ------------------------------------------------------- */
@@ -288,6 +301,10 @@ a.quiet.dark.active, a.quiet.dark:hover { color:rgba(255,255,255,0.75); }
   font-weight: bold;
 }
 
+.content-node.heading.level-2 .content .anchor {
+  top: 15px;
+}
+
 .content-node.heading.level-3 .content .anchor {
   top: 13px;
 }
@@ -417,6 +434,8 @@ body {
   margin-right: 20px;
 }
 
+
+
 .content-node.figure {
   text-align: center;
   padding-bottom: 20px;
@@ -430,6 +449,9 @@ body {
 .content-node.figure img {
   max-width: 100%;
 }
+
+
+
 
 /* Web Page */
 
@@ -479,6 +501,22 @@ pre {
   text-transform: uppercase;
   font-weight: 600;
 }
+
+.content-node.publication-info .citations {
+  padding-top: 20px;
+}
+
+.content-node.publication-info .citations .citation-url {
+  /*font-size: 14px;*/
+  /*padding-top: 20px;*/
+}
+
+.content-node.publication-info .citations .citation-description {
+  /*color: #777;*/
+  font-size: 14px;
+  padding-bottom: 20px;
+}
+
 
 .content-node.publication-info .authors .author {
   padding-bottom: 30px;

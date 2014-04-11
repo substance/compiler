@@ -27,6 +27,7 @@
 <div id="publication_info" class="content-node publication-info">
   <div class="content">
 
+
     <% var authors = []; %>
     <%
       doc.getAuthors().forEach(function(a) {
@@ -42,7 +43,25 @@
             <div class="author-description"><%= a.description %></div>
           </div>
         <% }); %>
-      </div>    
+      </div>
+    <% } %>
+
+    <%
+      var citations = _.map(doc.get('citations').nodes, function(citationId) {
+        return doc.get(citationId);
+      });
+    %>
+
+    <% if (citations.length > 0) { %>
+      <div class="citations">
+        <div class="label">References</div>
+        <% citations.forEach(function(citation) { %>
+          <div class="citation" id="<%= citation.id %>">
+            <div class="citation-url"><a href="<%= citation.url %>"><%= citation.url %></a></div>
+            <div class="citation-description"><%= citation.description %></div>
+          </div>
+        <% }); %>
+      </div>
     <% } %>
 
     <div class="supplements">
@@ -70,7 +89,6 @@
       </div>
     </div>
     <% } %>
-
   </div>
 </div>
 </div>
