@@ -1,0 +1,8 @@
+<div id="<%= node.id %>" class="content-node figure">
+  <div class="content">
+    <a href="<%= node.image %>" target="_blank"><img src="<%= node.image %>"></a>
+    <% if (node.caption) { %>
+    <div class="caption"><%= annotated([node.caption, 'content']) %></div>
+    <% } %>
+  </div>
+</div>

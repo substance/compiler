@@ -1,0 +1,17 @@
+{
+  "name": "Default",
+  "options": {
+    "include_toc": {
+      "type": "boolean",
+      "default": true
+    },
+    "include_references": {
+      "type": "boolean",
+      "default": true
+    },
+    "include_source_file": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

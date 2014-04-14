@@ -6,9 +6,9 @@ var fs = require("fs");
 var util = require("substance-util");
 var Fragmenter = util.Fragmenter;
 
-var Renderer = function(doc, template) {
+var Renderer = function(doc, templatePath) {
   this.doc = doc;
-  this.template = template;
+  this.templatePath = templatePath;
 };
 
 var renderAnnotatedContent = function(doc, propertyPath) {
@@ -88,17 +88,17 @@ var renderAnnotatedContent = function(doc, propertyPath) {
 Renderer.prototype.render = function() {
   var nodes = this.doc.get('content').nodes;
   var doc = this.doc;
-  var templateName = this.template;
+  var templatePath = this.templatePath;
 
-  var layoutTpl = fs.readFileSync(__dirname+"/templates/"+templateName+"/layout.html", "utf8");
-
+  // Main entry point is the document node (root node)
+  var layoutTpl = fs.readFileSync(templatePath+"/nodes/document.html", "utf8");
   var compiledLayout = _.template(layoutTpl);
-
   var fileName = util.slug(doc.title)+".sdf";
 
   var html = compiledLayout({
     doc: doc,
     filename: fileName,
+    options: {}, // TODO: expose template options
     render: function() {
       var htmlElements = [];
 
@@ -107,11 +107,12 @@ Renderer.prototype.render = function() {
 
       _.each(nodes, function(nodeId) {
         var node = doc.get(nodeId);
-        var nodeTpl = fs.readFileSync(__dirname+"/templates/"+templateName+"/nodes/"+node.type+".html", "utf8");
+        var nodeTpl = fs.readFileSync(templatePath+"/nodes/"+node.type+".html", "utf8");
         var compiledNodeTpl = _.template(nodeTpl);
 
         htmlElements.push(compiledNodeTpl({
           node: node,
+          options: {}, // TODO: expose template options
           annotated: function(propertyPath) {
             return renderAnnotatedContent(doc, propertyPath);
           }
@@ -134,29 +135,24 @@ var Compiler = function(doc) {
 
 Compiler.Prototype = function() {
 
-  this.compile = function(template) {
+  this.compile = function(templatePath) {
     var result = new JSZip();
     var doc = this.doc;
 
     // Render the page
-    var indexHTML = new Renderer(this.doc, "default").render();
+    var indexHTML = new Renderer(this.doc, templatePath).render();
 
     result.file("index.html", indexHTML);
+    var assetsDir = templatePath+"/assets";
 
-    var cssFile = fs.readFileSync(__dirname+"/templates/"+template+"/style.css", "utf8");
-    result.file("style.css", cssFile);
+    // Copy assets to destination dir
+    var assets = fs.readdirSync(templatePath+"/assets");
 
-    var jqueryJS = fs.readFileSync(__dirname+"/templates/"+template+"/jquery-2.1.0.min.js", "utf8");
-    result.file("jquery-2.1.0.min.js", jqueryJS);
-
-    var underscoreJS = fs.readFileSync(__dirname+"/templates/"+template+"/underscore.js", "utf8");
-    result.file("underscore.js", underscoreJS);
-
-    var appJS = fs.readFileSync(__dirname+"/templates/"+template+"/app.js", "utf8");
-    result.file("app.js", appJS);
-
-    result.file("content.json", JSON.stringify(doc.toJSON(), null, "  "));
-
+    _.each(assets, function(fileName) {
+      var sourcePath = assetsDir + "/"+fileName;
+      var fileBuffer = fs.readFileSync(sourcePath);
+      result.file(fileName, fileBuffer);
+    });
 
     // Also write binary files
     var fileIndex = doc.getIndex("files");
