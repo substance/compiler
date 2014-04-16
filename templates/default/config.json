@@ -1,6 +1,6 @@
 {
-  "id": "base",
-  "name": "Base",
+  "id": "default",
+  "name": "Default",
   "options": {
     "include_toc": {
       "type": "boolean",
