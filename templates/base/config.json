@@ -3,13 +3,21 @@
   "options": {
     "include_toc": {
       "type": "boolean",
+      "name": "Table of Contents",
       "default": true
     },
     "include_references": {
+      "name": "Include References",
+      "type": "boolean",
+      "default": true
+    },
+    "include_section_numbering": {
+      "name": "Section Numbering",
       "type": "boolean",
       "default": true
     },
     "include_source_file": {
+      "name": "Include Source file",
       "type": "boolean",
       "default": true
     }
