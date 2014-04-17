@@ -357,62 +357,62 @@ body {
   counter-reset: heading-4 0;
 }
 
-.content-node.cover .toc .toc-entry.level-1 {
+.article.section-numbering .content-node.cover .toc .toc-entry.level-1 {
   counter-increment: toc-chapter;
   counter-reset: toc-section 0 !important;
 }
-.content-node.cover .toc .toc-entry.level-1 a:before  { content: counter(toc-chapter) ". "; }
+.article.section-numbering .content-node.cover .toc .toc-entry.level-1 a:before  { content: counter(toc-chapter) ". "; }
 
-.content-node.cover .toc .toc-entry.level-2 {
+.article.section-numbering .content-node.cover .toc .toc-entry.level-2 {
   padding-left: 20px;
   counter-increment: toc-section;
   counter-reset: toc-subsection 0 !important;
 }
 
-.content-node.cover .toc .toc-entry.level-2 a:before  { content: counter(toc-chapter) "." counter(toc-section) ". "; }
+.article.section-numbering .content-node.cover .toc .toc-entry.level-2 a:before  { content: counter(toc-chapter) "." counter(toc-section) ". "; }
 
-.content-node.cover .toc .toc-entry.level-3 {
+.article.section-numbering .content-node.cover .toc .toc-entry.level-3 {
   padding-left: 40px;
   counter-increment: toc-subsection;
   counter-reset: toc-subsubsection 0 !important;
 }
-.content-node.cover .toc .toc-entry.level-3 a:before  { content: counter(toc-chapter) "." counter(toc-section) "." counter(toc-subsection) ". "; }
+.article.section-numbering .content-node.cover .toc .toc-entry.level-3 a:before  { content: counter(toc-chapter) "." counter(toc-section) "." counter(toc-subsection) ". "; }
 
-.content-node.cover .toc .toc-entry.level-4 {
+.article.section-numbering .content-node.cover .toc .toc-entry.level-4 {
   padding-left: 60px;
   counter-increment: toc-subsubsection;
 }
 
-.content-node.cover .toc .toc-entry.level-4 a:before  { content: counter(toc-chapter) "." counter(toc-section) "." counter(toc-subsection) "." counter(toc-subsubsection) ". "; }
+.article.section-numbering .content-node.cover .toc .toc-entry.level-4 a:before  { content: counter(toc-chapter) "." counter(toc-section) "." counter(toc-subsection) "." counter(toc-subsubsection) ". "; }
 
 
 /* Headings */
 
-.heading.level-1 {
+.article.section-numbering .heading.level-1 {
   counter-increment: heading-1;
   counter-reset: heading-2 0 !important;
 }
 
-.heading.level-1 h1:before { content: counter(heading-1) ". "; }
+.article.section-numbering .heading.level-1 h1:before { content: counter(heading-1) ". "; }
 
-.heading.level-2 {
+.article.section-numbering .heading.level-2 {
   counter-increment: heading-2;
   counter-reset: heading-3 0 !important;
 }
 
-.heading.level-2 h2:before { content: counter(heading-1) "." counter(heading-2) ". "; }
+.article.section-numbering .heading.level-2 h2:before { content: counter(heading-1) "." counter(heading-2) ". "; }
 
-.heading.level-3 {
+.article.section-numbering .heading.level-3 {
   counter-increment: heading-3;
   counter-reset: heading-4 0 !important;
 }
 
-.heading.level-3 h3:before { content: counter(heading-1) "." counter(heading-2) "." counter(heading-3) ". "; }
+.article.section-numbering .heading.level-3 h3:before { content: counter(heading-1) "." counter(heading-2) "." counter(heading-3) ". "; }
 
-.heading.level-4 {
+.article.section-numbering .heading.level-4 {
   counter-increment: heading-4;
 }
-.heading.level-4 h4:before { content: counter(heading-1) "." counter(heading-2) "." counter(heading-3) "." counter(heading-4) ". "; }
+.article.section-numbering .heading.level-4 h4:before { content: counter(heading-1) "." counter(heading-2) "." counter(heading-3) "." counter(heading-4) ". "; }
 
 
 

@@ -6,9 +6,10 @@ var fs = require("fs");
 var util = require("substance-util");
 var Fragmenter = util.Fragmenter;
 
-var Renderer = function(doc, templatePath) {
+var Renderer = function(doc, templatePath, templateParams) {
   this.doc = doc;
   this.templatePath = templatePath;
+  this.templateParams = templateParams;
 };
 
 var renderAnnotatedContent = function(doc, propertyPath) {
@@ -89,16 +90,18 @@ Renderer.prototype.render = function() {
   var nodes = this.doc.get('content').nodes;
   var doc = this.doc;
   var templatePath = this.templatePath;
+  var templateParams = this.templateParams;
 
   // Main entry point is the document node (root node)
   var layoutTpl = fs.readFileSync(templatePath+"/nodes/document.html", "utf8");
   var compiledLayout = _.template(layoutTpl);
   var fileName = util.slug(doc.title)+".sdf";
 
+  console.log('============', templateParams);
   var html = compiledLayout({
     doc: doc,
     filename: fileName,
-    options: {}, // TODO: expose template options
+    options: templateParams, // TODO: expose template options
     render: function() {
       var htmlElements = [];
 
@@ -112,7 +115,7 @@ Renderer.prototype.render = function() {
 
         htmlElements.push(compiledNodeTpl({
           node: node,
-          options: {}, // TODO: expose template options
+          options: templateParams, // TODO: expose template options
           annotated: function(propertyPath) {
             return renderAnnotatedContent(doc, propertyPath);
           }
@@ -135,12 +138,12 @@ var Compiler = function(doc) {
 
 Compiler.Prototype = function() {
 
-  this.compile = function(templatePath) {
+  this.compile = function(templatePath, templateParams) {
     var result = new JSZip();
     var doc = this.doc;
 
     // Render the page
-    var indexHTML = new Renderer(this.doc, templatePath).render();
+    var indexHTML = new Renderer(this.doc, templatePath, templateParams).render();
 
     result.file("index.html", indexHTML);
     var assetsDir = templatePath+"/assets";
@@ -158,7 +161,9 @@ Compiler.Prototype = function() {
     var fileIndex = doc.getIndex("files");
     _.each(fileIndex.nodes, function(fileId) {
       var file = doc.get(fileId);
-      result.file(fileId, file.getData());
+      if (file.isBinary()) {
+        result.file(fileId, file.getData());  
+      }
     });
 
     return result;

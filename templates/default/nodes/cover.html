@@ -18,7 +18,7 @@
   });
 %> 
 
-<% if (headings.length>7) { %>
+<% if (options.include_toc && headings.length >= 2) { %>
 <div class="toc">
   <div class="toc-title">Contents </div>
   <div class="toc-entries">

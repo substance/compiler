@@ -1,26 +1,31 @@
 {
   "id": "default",
   "name": "Default",
-  "options": {
+  "params": {
     "include_toc": {
       "type": "boolean",
       "name": "Table of Contents",
-      "default": true
+      "default": false
     },
     "include_references": {
       "name": "Include References",
       "type": "boolean",
-      "default": true
+      "default": false
     },
-    "include_section_numbering": {
+    "enable_section_numbering": {
       "name": "Section Numbering",
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "include_source_file": {
-      "name": "Include Source file",
+      "name": "Include Source File",
       "type": "boolean",
-      "default": true
+      "default": false
+    },
+    "enable_bookmarks": {
+      "name": "Enable bookmarks",
+      "type": "boolean",
+      "default": false
     }
   }
 }
