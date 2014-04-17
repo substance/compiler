@@ -97,7 +97,6 @@ Renderer.prototype.render = function() {
   var compiledLayout = _.template(layoutTpl);
   var fileName = util.slug(doc.title)+".sdf";
 
-  console.log('============', templateParams);
   var html = compiledLayout({
     doc: doc,
     filename: fileName,
@@ -138,7 +137,7 @@ var Compiler = function(doc) {
 
 Compiler.Prototype = function() {
 
-  this.compile = function(templatePath, templateParams) {
+  this.compile = function(templatePath, templateParams, cb) {
     var result = new JSZip();
     var doc = this.doc;
 
@@ -166,7 +165,14 @@ Compiler.Prototype = function() {
       }
     });
 
-    return result;
+    // Attach source file
+    util.zip.zip(doc, function(err, zip) {
+      var data = zip.generate({type: "nodebuffer"});
+      result.file(util.slug(doc.title)+".sdf", data);
+    });
+    
+    cb(null, result);
+    // return result;
   };
 };
 
