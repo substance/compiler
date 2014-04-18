@@ -1,0 +1,41 @@
+{
+  "name": "substance-compiler",
+  "description": "Takes a Substance document and a template and compiles it into a web publication",
+  "url": "http://github.com/substance/compiler",
+  "keywords": [
+    "static site generator",
+    "markdown"
+  ],
+  "author": "Michael Aufreiter",
+  "contributors": [
+    "Oliver Buchtala"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/substance/compiler.git"
+  },
+  "dependencies": {
+    "underscore": "1.5.x",
+    "substance-application": "git+https://github.com/substance/application.git#master",
+    "substance-article": "git+https://github.com/substance/article.git#single_column",
+    "substance-data": "git+https://github.com/michael/data.git#master",
+    "substance-document": "git+https://github.com/substance/document.git#master",
+    "substance-commander": "git+https://github.com/substance/commander.git#master",
+    "substance-chronicle": "git+https://github.com/substance/chronicle.git#master",
+    "substance-nodes": "git+https://github.com/substance/nodes.git#single_column",
+    "substance-operator": "git+https://github.com/substance/operator.git#master",
+    "substance-regexp": "git+https://github.com/substance/regexp.git#master",
+    "substance-surface": "git+https://github.com/substance/surface.git#master",
+    "substance-test": "git+https://github.com/substance/test.git#master",
+    "substance-toc": "git+https://github.com/substance/toc.git#master",
+    "substance-util": "git+https://github.com/substance/util.git#master"
+  },
+  "bin": {
+    "sc": "./sc.js"
+  },
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=0.8.x",
+    "npm": ">=1.1.x"
+  }
+}

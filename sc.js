@@ -6,9 +6,9 @@ var util = require("substance-util");
 var Compiler = require("./compiler");
 var Article = require("substance-article");
 
-
-var SOURCE_FILE = process.argv[2] ||  __dirname + "/data/substance-network.sdf.zip";
-var TARGET_DIR = process.argv[3] || __dirname + "/out";
+var SOURCE_FILE = process.argv[2];
+var TEMPLATE_DIR = process.argv[3];
+var TARGET_DIR = process.argv[4];
 
 if (!fs.existsSync(TARGET_DIR)) {
   fs.mkdirSync(TARGET_DIR);
@@ -25,7 +25,8 @@ var doc = util.zip.unzipFromArrayBuffer(docData, {
 
 // var doc = unpack(SOURCE_FILE);
 var compiler = new Compiler(doc);
-var webDocumentZip = compiler.compile("default");
+var webDocumentZip = compiler.compile(TEMPLATE_DIR, {});
+
 
 // Write to disk
 _.each(webDocumentZip.files, function(file, fileName) {

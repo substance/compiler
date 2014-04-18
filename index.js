@@ -1,5 +1,3 @@
 "use strict";
 
-module.exports = {
-  Compiler: require("./compiler")
-};
+module.exports = require("./compiler");
