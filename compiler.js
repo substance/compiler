@@ -165,14 +165,19 @@ Compiler.Prototype = function() {
       }
     });
 
-    // Attach source file
-    util.zip.zip(doc, function(err, zip) {
-      var data = zip.generate({type: "nodebuffer"});
-      result.file(util.slug(doc.title)+".sdf", data);
-    });
+    if (templateParams.include_source_file) {
+      // Attach source file
+      util.zip.zip(doc, function(err, zip) {
+        var data = zip.generate({type: "nodebuffer"});
+        result.file(util.slug(doc.title)+".sdf", data);
+        result.file("content.json", JSON.stringify(doc.toJSON(), null, "  "));
+
+        cb(null, result);
+      });
+    } else {
+      cb(null, result);  
+    }    
     
-    cb(null, result);
-    // return result;
   };
 };
 
