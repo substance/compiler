@@ -12,6 +12,10 @@ var Renderer = function(doc, templatePath, templateParams) {
   this.templateParams = templateParams;
 };
 
+function htmlEntities(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 var renderAnnotatedContent = function(doc, propertyPath) {
   var property = doc.resolve(propertyPath);
   var content = property.get();
@@ -26,7 +30,7 @@ var renderAnnotatedContent = function(doc, propertyPath) {
 
   // called for raw text blocks
   fragmenter.onText = function(context, text) {
-    annotatedContent.push(text);
+    annotatedContent.push(htmlEntities(text));
   };
 
   // called when an annotation starts
