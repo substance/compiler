@@ -104,6 +104,7 @@ Renderer.prototype.render = function() {
   var html = compiledLayout({
     doc: doc,
     filename: fileName,
+    params: templateParams,
     options: templateParams, // TODO: expose template options
     render: function() {
       var htmlElements = [];
@@ -118,9 +119,15 @@ Renderer.prototype.render = function() {
 
         htmlElements.push(compiledNodeTpl({
           node: node,
+          params: templateParams,
           options: templateParams, // TODO: expose template options
           annotated: function(propertyPath) {
             return renderAnnotatedContent(doc, propertyPath);
+          },
+          escapedPlainText: function(propertyPath) {
+            var property = doc.resolve(propertyPath);
+            var content = property.get();
+            return htmlEntities(content);
           }
         }));
       });
