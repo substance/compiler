@@ -172,7 +172,10 @@ Compiler.Prototype = function() {
     _.each(fileIndex.nodes, function(fileId) {
       var file = doc.get(fileId);
       if (file.isBinary()) {
-        result.file(fileId, file.getData());  
+        result.file(fileId, file.getData());
+      } else if (!file.isJSON()) {
+        // For some reason, writing publish.json makes troubles
+        result.file(fileId, file.getData());
       }
     });
 
