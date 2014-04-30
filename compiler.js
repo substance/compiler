@@ -87,7 +87,8 @@ var renderAnnotatedContent = function(doc, propertyPath) {
 
   fragmenter.start(null, content, annotations);
 
-  return annotatedContent.join("");
+  var result = annotatedContent.join("");
+  return result.replace(/\n/g, "<br/>");
 };
 
 Renderer.prototype.render = function() {
