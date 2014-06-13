@@ -43,6 +43,9 @@ var renderAnnotatedContent = function(doc, propertyPath) {
     case "emphasis":
       annotatedContent.push("<em>");
       break;
+    case "remark_reference":
+      annotatedContent.push("<span class='remark'>");
+      break;
     case "code":
       annotatedContent.push("<code>");
       break;
@@ -69,6 +72,9 @@ var renderAnnotatedContent = function(doc, propertyPath) {
       break;
     case "emphasis":
       annotatedContent.push("</em>");
+      break;
+    case "remark_reference":
+      annotatedContent.push("</span>");
       break;
     case "code":
       annotatedContent.push("</code>");
