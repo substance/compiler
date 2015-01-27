@@ -15,7 +15,7 @@
     "url": "https://github.com/substance/compiler.git"
   },
   "dependencies": {
-    "underscore": "1.5.x",
+    "underscore": "*",
     "substance-application": "git+https://github.com/substance/application.git#master",
     "substance-article": "git+https://github.com/substance/article.git#single_column",
     "substance-data": "git+https://github.com/michael/data.git#master",
