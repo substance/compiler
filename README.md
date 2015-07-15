@@ -1,6 +1,8 @@
 Substance Compiler
 =========
 
+**No longer maintained. Use http://github.com/substance/substance instead.**
+
 Takes a Substance document as an input and turns it into a webpage ready to publish.
 
 ## Install
